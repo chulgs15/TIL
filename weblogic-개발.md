@@ -14,3 +14,9 @@
   * domain 볼륨.
 * https://www.lesstif.com/java/maven-deploy-plugin-8912900.html
   * deploy:deploy-file
+
+```
+docker run --name wlsnode01 -d -p 7001:7001 -p 9002:9002   -e DOMAIN_NAME=base_domain  -v C:/Users/comscg/Desktop/docker/weblogic/base_domain:/u01/oracle/user_projects/domains/:z  -v C:/Users/comscg/Desktop/docker/weblogic/properties:/u01/oracle/properties:z  store/oracle/weblogic:12.2.1.3-dev-190111
+
+```
+
