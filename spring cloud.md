@@ -140,10 +140,29 @@ eureka:
   * Netflix Zuul 
     * Gateway 역할을 함.
     * Maintenance 상태로 2.4 이후에는 유지보수 하지 않음.
+* 분산 전달 여부를 확인
+  * first-service 
+  * second-service
+  * EnableZullProxy
+    * zuul.routes
+  * ZullFilter
+    * 사전/사후 처리를 넣을 수 있다.
+* Filter 
+  * Zuul Filter
+    * Component 로 등록.
+    * 사용자의 요청정보를 사전/사후 필터를 적용할 수 있다.
+    
+> 사후 필터는 내가 한번 해보자.
 
+## Spring Cloud Gateway
 
-
-
+* 종속성 선택
+* cloud.gateway.routes
+  * id : 라우틴 이름
+  * uri : 위치 정보를 입력
+  * prediates : 요청 조건
+* 비동기를 지원하기 때문에 Zuul 서비스를 대체할 수 있다.
+* first/second 서비스 모두 동일하게 생성.
 
 
 
