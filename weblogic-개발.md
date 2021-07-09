@@ -20,3 +20,6 @@ docker run --name wlsnode01 -d -p 7001:7001 -p 9002:9002   -e DOMAIN_NAME=base_d
 
 ```
 
+* https://hakurei.tistory.com/122
+  * maven 빌드 rename
+
