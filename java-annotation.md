@@ -50,4 +50,9 @@
   * repeatabled
 * https://www.baeldung.com/java-safevarargs
   * Safevarargs
-
+* https://donghyeon.dev/spring/2020/08/18/Spring-Annotation%EC%9D%98-%EC%9B%90%EB%A6%AC%EC%99%80-Custom-Annotation-%EB%A7%8C%EB%93%A4%EC%96%B4%EB%B3%B4%EA%B8%B0/
+  * annotation 원리.
+* https://mkyong.com/java/apache-poi-reading-and-writing-excel-file-in-java/
+  * excel export 확인
+* https://nearhomedeveloper.tistory.com/entry/JavaExcel-POI-POI-apache-cell-%EC%84%9C%EC%8B%9D-%EC%A0%81%EC%9A%A9-%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95
+  * 날짜 형식 지정. 
