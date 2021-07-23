@@ -151,7 +151,6 @@ eureka:
   * Zuul Filter
     * Component 로 등록.
     * 사용자의 요청정보를 사전/사후 필터를 적용할 수 있다.
-    
 > 사후 필터는 내가 한번 해보자.
 
 ## Spring Cloud Gateway
@@ -198,7 +197,55 @@ eureka:
 
 * first/second 서비스 모두 동일하게 생성.
 
+## Spring Cloud Gateway - Custom Filter
 
+![image](https://user-images.githubusercontent.com/22446581/125132757-bde4a680-e13f-11eb-8a0f-66fe3ebdbd7b.png)
+
+* AbstractGatewayFilterFactory를 상속받아 구현
+* ServerHttpRequest/ServerHttpResponse 객체를 사용.
+  * Servlet을 사용하지 않는다.
+
+```java
+package com.example.apigatewayservice.config;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@RequiredArgsConstructor
+public class FilterConfig {
+
+    private final CustomFilter customFilter;
+
+    @Bean
+    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
+        return builder.routes()
+                .route(r -> r.path("/first-services/**")
+                    .filters(f -> f.addRequestHeader("first-request", "first-request-header")
+                            .addResponseHeader("first-response", "first-response-header")
+                            .filter(customFilter.apply(new CustomFilter.Config()))
+                            )
+                    .uri("http://localhost:8081/"))
+                .route(r -> r.path("/second-services/**")
+                    .filters(f -> f.addRequestHeader("second-request", "second-request-header")
+                            .addResponseHeader("second-response", "second-response-header"))
+                    .uri("http://localhost:8082/"))
+                .build();
+    }
+
+}
+
+```
+
+
+
+* application.yml
+  * 생성한 Filter를 적용.
+* 차후에 사용자 로그인 기능을 넣을 수 있다.
 
 
 
