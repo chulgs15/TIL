@@ -157,11 +157,45 @@ eureka:
 ## Spring Cloud Gateway
 
 * 종속성 선택
+
 * cloud.gateway.routes
+
+  ```yaml
+  server:
+    port: 8000
+  
+  eureka:
+    client:
+      register-with-eureka: false
+      fetch-registry: false
+      service-url:
+        defaultZone: http://localhost:8761/eureka
+  
+  
+  spring:
+    application:
+      name: apigateway-service
+    cloud:
+      gateway:
+        routes:
+          - id: first-services
+            uri: http://localhost:8081/
+            predicates:
+              - Path=/first-services/**
+          - id: second-services
+            uri: http://localhost:8082/
+            predicates:
+              - Path=/second-services/**
+  ```
+
+  
+
   * id : 라우틴 이름
   * uri : 위치 정보를 입력
   * prediates : 요청 조건
+
 * 비동기를 지원하기 때문에 Zuul 서비스를 대체할 수 있다.
+
 * first/second 서비스 모두 동일하게 생성.
 
 
