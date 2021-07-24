@@ -478,7 +478,49 @@ spring:
 
 * API Gateway 와 eureka 서버의 연결성을 확인한다.
   * 신기한 점은 `lb://`주소를 eureka에서 확인해서 서비스 url로 전달한다는 점이다.
-  * 
+
+### application.yml (apigateway-servce)
+
+```yaml
+server:
+  port: 8000
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+spring:
+  application:
+    name: apigateway-service
+  cloud:
+    gateway:
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: spring cloud gateway global filter
+            preLogger: true
+            postLogger: true
+      routes:
+        - id: first-services
+          uri: lb://MY-FIRST-SERVICE
+          predicates:
+            - Path=/first-services/**
+          filters:
+            - CustomFilter
+        - id: second-services
+          uri: lb://MY-SECOND-SERVICE
+          predicates:
+            - Path=/second-services/**
+          filters:
+            - name: CustomFilter
+            - name: LoggingFilter
+              args:
+                baseMessage: Hi, There
+                preLogger: true
+                postLogger: true
+```
 
 
 
