@@ -472,7 +472,7 @@ spring:
 
 ```
 
-## Spring Cloud Gatewat - Eureka 연동
+## Spring Cloud Gateway - Load Balancer
 
 ![image](https://user-images.githubusercontent.com/22446581/126882196-d975b091-964a-4651-a77f-623580aa5476.png)
 
@@ -521,6 +521,78 @@ spring:
                 preLogger: true
                 postLogger: true
 ```
+
+## First-Services Random port
+
+first-services 에 random port를 적용해서 서비스를 분산시킨다.
+```yaml
+server:
+  port: 0
+
+spring:
+  application:
+    name: user-service
+
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+```
+## 서버 포트 확인.
+`check` entry point를 만들어 실행하는 server port를 확인한다. server port를 확인할 수 있는 방법은 아래와 같다.
+
+1. Environmet
+2. HttpServletRequest
+
+```java
+package com.example.firstservice;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+
+@RestController
+@RequestMapping("/first-services")
+@Slf4j
+public class FirstRestController {
+
+    private final Environment environment;
+
+    public FirstRestController(Environment environment) {
+        this.environment = environment;
+    }
+
+    @GetMapping(value = {"/welcome"})
+    public String welcome() {
+        return "Welcome to the first service.";
+    }
+
+    @GetMapping(value = {"/message"})
+    public String message(@RequestHeader("first-request") String header) {
+        log.info(header);
+        return "Hello World in First Service";
+    }
+
+    @GetMapping(value = {"/check"})
+    public String check(HttpServletRequest request) {
+        log.info("HttpServletRequest server port is " + request.getServerPort());
+        String message = "Environment server port is " + environment.getProperty("local.server.port");
+        log.info(message);
+        return message;
+    }
+}
+```
+
+# E-commerce 애플리케이션.
 
 
 
