@@ -594,9 +594,16 @@ public class FirstRestController {
 
 # E-commerce 애플리케이션.
 
+| 구성요소           | 설명                                           |
+| ------------------ | ---------------------------------------------- |
+| Git Repository     | 소스 관리                                      |
+| Config Server      | Git 저장소에 등록된 프로파일 정보 및 설정 정보 |
+| Eureka Server      | 마이크로 서비스 등록 및 검색                   |
+| API Gateway Server | 마이크로서비스 부하 분산 및 서비스 라우팅      |
+| Microservices      | 회원 MS, 주문 MS, 상품 MS                      |
+| Queueing System    | 마이크로서비스 간 메시지 발행 및 구독          |
 
-
-
+## Users Microservice
 
 
 
