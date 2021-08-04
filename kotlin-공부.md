@@ -114,6 +114,85 @@ fun main(args: Array<String>) {
 }
 ```
 
+## Function with varargs Parameter
+
+
+```kotlin
+fun main(args: Array<String>) {
+    fun printAll(vararg messages: String) {
+        for (m in messages) println(m)
+    }
+
+    printAll("hello", "world ")
+
+    fun printAllWithPrefix(vararg messages: String, prefix: String) {
+        for (m in messages) println(prefix + m)
+    }
+
+    printAllWithPrefix("hello", "world", prefix = "messsage is ")
+
+    fun log(vararg entries: String) {
+        printAll(*entries)
+    }
+
+    log("hello", "world")
+}
+```
+
+* 변수를 키워드로 list 형태를 사용할 수 있다.
+* named parameters 덕분에, `prefix`를 선언해서 별도로 사용할 수 있다.
+* 실행 시, varargs 는 배열이다. varargs 를 다른 함수에 전달하려면 `*`키워드를 사용해야 한다.
+
+## Variables
+
+* 코틀린은 강력한 타입추론이 가능하다.
+* `var` 보다 `val` 을 추천한다.
+* 반드시 초기화 해야한다.
+
+## Null Safety
+
+```kotlin
+fun main(args: Array<String>) {
+    var neverNull: String = "test"
+    neverNull = null
+
+    var nullable:String? = "test"
+    nullable = null
+}
+```
+
+* `null` 을 사용하려면, `?` 키워드를 사용해야 한다.
+
+## Class
+
+* Class 맴버 변수가 없다면, 이름만 선언할 수 있다. 
+* Class 내에 메소드가 없다면, `{}`없이 맴버 변수만 선안할 수 있다.
+* new 키워드를 사용하지 않는다.
+* 클래스 맴버 변수에 var, val 을 선언하지 않으면 접근할 수 없다. 생각에는 private 으로 선언하는 것 같다.
+
+```kotlin
+class Contact
+
+class Customer(val id:Int, var name:String)
+
+fun main(args: Array<String>) {
+    val contact = Contact()
+    val customer = Customer(1, "test")
+
+    customer.name = "Test"
+    println("id = " + customer.id)
+    println("name = " + customer.name)
+}
+```
+
+
+
+
+
+
+
+
+
 
 
 
