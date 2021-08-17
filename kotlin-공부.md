@@ -185,11 +185,206 @@ fun main(args: Array<String>) {
 }
 ```
 
+## Generics
 
+*  Java  처럼 Generic 을 쓸 수 있다. 
+```kotlin
+fun main() {
+    val mutableStack = MutableStack(0.62, 3.14, 2.7, 9.87)
+    println(mutableStack.peek())
 
+    println(mutableStack.size())
+}
 
+class MutableStack<E>(vararg items: E) {
+    private val elements = items.toMutableList()
 
+    fun push(element: E) = elements.add(element)
 
+    fun peek(): E = elements.last()
+
+    fun pop(): E = elements.removeAt(elements.size - 1)
+
+    fun isEmpty() = elements.isEmpty()
+
+    fun size() = elements.size
+
+    override fun toString(): String = "MutableStack($(elements.joinToString()))"
+}
+```
+
+## Generic Function
+* Function 에 Generic을 적용할 수 있다.
+```kotlin
+fun main() {
+    val stack = mutableStackOf(0.62, 3.14, 2.7)
+    println(stack)
+}
+
+fun <E> mutableStackOf(vararg elements: E) = MutableStack(*elements)
+```
+## Inheritance
+* OOP 를 적용했다.
+* kotlin 은 final 이 class와 methods 에 기본으로 적용한다.
+
+```kotlin
+package session01
+
+open class Dog {
+    open fun sayHello() {
+        println("wow wow")
+    }
+}
+
+class Yorkshire : Dog() {
+    override fun sayHello() {
+        println("wif wif!")
+    }
+}
+
+fun main() {
+    val dog: Dog = Yorkshire()
+    dog.sayHello()
+}
+```
+
+### Inheritance with Parameterized Constructor
+* 생성자에 Parameter를 추가할 수 있다. 
+
+```kotlin
+package session01
+
+open class Tiger(val origin: String){
+    fun sayHello() {
+        println("A tiger from $origin says: grrhh!")
+    }
+}
+
+class SiberianTiger : Tiger("Siberia")
+
+fun main() {
+    val tiger = SiberianTiger()
+    tiger.sayHello()
+}
+```
+# Control flow
+## when
+* when절이 좀 특이하긴 하네.
+* 타입체크를 할 때 `is`를 사용한다.
+* Java의 `switch`랑 다른 점이 하나 있는데, 하나의 조건이 맞으면 그 조건의 내용 1개만 실행한다. Java는 반대로 내용에 break를 설정해야 1개만 실행한다.
+```kotlin
+fun main() {
+    cases("Hello")
+    cases(1)
+    cases(0L)
+    cases(MyCalss())
+    cases("hello")
+}
+
+fun cases(obj: Any) {
+    when (obj){
+        1 -> println("One")
+        "Hello" -> println("Greeting")
+        is Long -> println("Long")
+        !is String -> println("Not a string")
+        else -> println("Unknow")
+    }
+}
+
+class MyCalss
+```
+
+## When Expression
+* 변수에 `when` 을 할당할 수 있다.
+```kotlin
+fun main() {
+    println(whenAssign("Hello"))
+    println(whenAssign(3.4))
+    println(whenAssign(1))
+    println(whenAssign(MyClass()))
+}
+
+fun whenAssign(obj:Any): Any{
+    val result = when (obj) {
+        1 -> "one"
+        "Hello" -> 1
+        is Long -> false
+        else -> 42
+    }
+
+    return result
+}
+
+class MyClass
+```
+
+## Loop
+
+* `iterator`를 만들 때, `operator` 키워드를 사용해야 한다.
+
+```kotlin
+fun main() {
+    val cakes = listOf("carrot", "cheese", "chocolate")
+    for (cake in cakes) {
+        println("Yummy, it's a $cake cake!")
+    }
+
+    fun eatACake() = println("Eat a Cake")
+    fun bakeACake() = println("bake a Cake")
+
+    var cakesEaten = 0
+    var cakesBaked = 0
+
+    while (cakesEaten < 5) {
+        eatACake();
+        cakesEaten++
+    }
+
+    do {
+        bakeACake()
+        cakesBaked++
+    } while (cakesBaked < cakesEaten)
+
+    class Animal(val name: String)
+
+    class Zoo(val animals: List<Animal>) {
+        operator fun iterator(): Iterator<Animal> {
+            return animals.iterator()
+        }
+    }
+
+    val zoo = Zoo(listOf(Animal("zebra"), Animal("lion")))
+
+    for (animal in zoo) {
+        println("Wath out. it is a ${animal.name}")
+    }
+}
+```
+
+# Special Class
+
+## data class
+
+* 값을 저장하기 위해 사용하는 class 다.
+* copy, getter를 제공한다.
+* method 를 override 해서 사용할 수 있다.
+
+* `data` 키워드를 시작할 때 붙인다. 
+* `equals`를 override하여 다시 사용할 수 있다.
+* toString() 이 자동으로 만들어진다.
+* java  도 같은지 확인이 필요하다.
+  * 다름 java는 같은 값을 가져도 hashcode 는 다르다.
+
+1. Defines a data class with the `data` modifier.
+2. Override the default `equals` method by declaring users equal if they have the same `id`.
+3. Method `toString` is auto-generated, which makes `println` output look nice.
+4. Our custom `equals` considers two instances equal if their `id`s are equal.
+5. Data class instances with exactly matching attributes have the same `hashCode`.
+6. Auto-generated `copy` function makes it easy to create a new instance.
+7. `copy` creates a new instance, so the object and its copy have distinct references.
+8. When copying, you can change values of certain properties. `copy` accepts arguments in the same order as the class constructor.
+9. Use `copy` with named arguments to change the value despite of the properties order.
+10. Auto-generated `componentN` functions let you get the values of properties in the order of declaration.
 
 
 
