@@ -368,29 +368,39 @@ fun main() {
 * 값을 저장하기 위해 사용하는 class 다.
 * copy, getter를 제공한다.
 * method 를 override 해서 사용할 수 있다.
-
 * `data` 키워드를 시작할 때 붙인다. 
 * `equals`를 override하여 다시 사용할 수 있다.
 * toString() 이 자동으로 만들어진다.
 * java  도 같은지 확인이 필요하다.
   * 다름 java는 같은 값을 가져도 hashcode 는 다르다.
+* `copy` function 이 있어, 같은 값을 가진 class를 쉽게 만들 수 있다.
+* 특정 변수 값을 바꾼 class를 copy 하고 싶다면, arguement에 추가하면 된다.
+  * named 도 가능하다.
+* `componentN` 함수는 선언 순서대로 인스턴스 변수를 가져올 수 있다.
 
-1. Defines a data class with the `data` modifier.
-2. Override the default `equals` method by declaring users equal if they have the same `id`.
-3. Method `toString` is auto-generated, which makes `println` output look nice.
-4. Our custom `equals` considers two instances equal if their `id`s are equal.
-5. Data class instances with exactly matching attributes have the same `hashCode`.
-6. Auto-generated `copy` function makes it easy to create a new instance.
-7. `copy` creates a new instance, so the object and its copy have distinct references.
-8. When copying, you can change values of certain properties. `copy` accepts arguments in the same order as the class constructor.
-9. Use `copy` with named arguments to change the value despite of the properties order.
-10. Auto-generated `componentN` functions let you get the values of properties in the order of declaration.
+## Enum Classes
+
+* Enum classes 에 추상 method 를 아래와 같이 설정할 수 있다.
+```kotlin
+enum class Color(val rgb: Int) {
+
+    RED(0xFF0000) {
+        override fun getStringName() = "RED"
+    },
+    GREEN(0x00FF00) {
+        override fun getStringName(): String = "GREEN"
+    };
+
+    abstract fun getStringName(): String
+}
+```
 
 
+## Sealed Classes
 
-
-
-
+* Sealed classes 상속을 제한할 수 있다.
+  * 같은 package 안에서 상속만 가능하다.
+  * 추상 클래스임.
 
 
 
