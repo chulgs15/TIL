@@ -55,8 +55,22 @@ Part1 Oracle Relational Data Structures
   * Example : Create Table and Alter table statements
   * Oracle Data Types
     * Character Data Types
+      * https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=darkturtle&logNo=50042229931
+      * Character / Byte 로 길이를 설정할 수 있다. 
+      * NLS_LENGTH_SEMANTICS : 설정 파라미터
+      * VARCHAR2 and CHAR Data Types
+        * 가변길이와 고정길이 저장방식의 차이
+      * NCHAR and NVARCHAR2 Data Types
+        * Unicode 기반의 문자열 저장 방식
+        * Character Set  = AL16UTF16  or UTF8
     * Numeric Data Types
+      * Fixed Point Numbers
+        * 고정형 숫자 표기. Precision, Scale 을 설정.
+      * Floating Point Numbers
+        * BINARY_FLOAT, BINARY_DOUBLE
+        * 근사치를 저장하기 때문에 정확한 표현이 어렵다.
     * Datetime Data Types
+      * DATE Data Type 
     * Rowid Data Types
     * Format Models and Data Types
   * Integrity Constraints
