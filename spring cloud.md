@@ -605,9 +605,43 @@ public class FirstRestController {
 
 ## Users Microservice
 
+* 이전 Hostname 을 사용했던 것과 달리, application 이름을 eureka 에 등록할 수 있다.
+
+```yaml
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+```
+
+* Environment 객체를 사용하면 application.yml 파일에 등록한 값을 가져올 수 있다.
+
+```java
+@RestController
+@RequestMapping("/")
+public class UserController {
+
+    private Greeting greeting;
+
+    private Environment environment;
+
+    public UserController(Greeting greeting, Environment environment) {
+        this.greeting = greeting;
+        this.environment = environment;
+    }
+
+    @GetMapping("health_check")
+    public String status() {
+        return "It is working : user-service";
+    }
 
 
+    @GetMapping("/welcome")
+    public String welcome() {
+        return greeting.getMessage();
+    }
 
+}
+```
 
 
 
